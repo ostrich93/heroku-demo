@@ -1,11 +1,12 @@
 const express = require('express')
 const app = express()
-const { layout, instructorUL } = require('./templates')
-const instructors = require('./instructors.json')
+const { layout, instructorUL } = require('./templates');
+const { Instructor } = require('./models');
 const PORT = process.env.PORT || 3000
 
 app.get('/', async (req, res, next) => {
-  res.send(layout(instructorUL(instructors)))
+  const instructors = await Instructor.findAll({ where: { name: 'Ben' } });
+  res.send(layout(instructorUL(instructors)));
 })
 
 app.listen(PORT, (err) => {
